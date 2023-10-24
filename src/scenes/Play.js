@@ -81,9 +81,17 @@ class Play extends Phaser.Scene {
             frameRate: 30
         }); 
 
-        this.timedEvent = this.time.delayedCall(1000, ()=>{
-            console.log('game over!'); 
+        this.timerText = this.add.text(16, 32, 'Timer: 60', { fontSize: '32px', fill: '#fff' });
+        this.timer = 60;
+
+        this.timedEvent = this.time.delayedCall(60000, ()=>{
+            console.log(this.timer); 
+            if(this.gameOver == false){
+                this.timer--; 
+                this.timerText.setText('Timer: ' + this.timer); //what var goes in here? 
+            } 
         }, [], this); 
+        
 
 
 
@@ -144,7 +152,12 @@ class Play extends Phaser.Scene {
             this.newship.update(); 
         } 
 
+        let progress = this.timedEvent.getProgress(); 
+        let progressinSeconds = Math.round(progress * 100); 
+        console.log(Math.round(progress * 100)); 
+        this.timerText.setText(progressinSeconds); 
         //this.text.setText(`Event.progress: ${this.timedEvent.getProgress().toString().substr(0, 4)}`);
+        
 
         if(this.checkCollision(this.p1Rocket, this.newship)){
             this.p1Rocket.reset(); 
