@@ -10,6 +10,7 @@ class Play extends Phaser.Scene {
         this.load.image('starfield', './assets/starfield.png');
         this.load.image('background', './assets/pixil-frame-0.png'); 
         this.load.image('stars', './assets/pixil-frame-1.png'); 
+        this.load.image('hardmode', 'assets/pixil-frame-2.png'); ///not working? 
         // load spritesheet
         this.load.spritesheet('explosion', './assets/explosion.png', {frameWidth: 64, frameHeight: 32, startFrame: 0, endFrame: 9});
     }
@@ -39,11 +40,15 @@ class Play extends Phaser.Scene {
         this.ship01 = new Spaceship(this, game.config.width + borderUISize*6, borderUISize*4, 'spaceship', 0, 30).setOrigin(0, 0);
         this.ship02 = new Spaceship(this, game.config.width + borderUISize*3, borderUISize*5 + borderPadding*2, 'spaceship', 0, 20).setOrigin(0,0);
         this.ship03 = new Spaceship(this, game.config.width, borderUISize*6 + borderPadding*4, 'spaceship', 0, 10).setOrigin(0,0);
+        this.newship = new Spaceship(this, game.config.width + borderUISize*2, borderPadding+4, 'hardmode', 0, 50).setOrigin(0,0);
     
+        this.newship.moveSpeed *= 1.25; 
+
         this.halftime = this.time.delayedCall(game.settings.gameTimer/2, () => {
             this.ship01.moveSpeed *= 1.5;
             this.ship02.moveSpeed *= 1.5;
             this.ship03.moveSpeed *= 1.5;
+            this.newship.moveSpeed *= 1.5; 
         }, null, this); 
 
         this.anims.create({
@@ -106,8 +111,13 @@ class Play extends Phaser.Scene {
             this.ship01.update();               // update spaceships (x3)
             this.ship02.update();
             this.ship03.update();
+            this.newship.update(); 
         } 
 
+        if(this.checkCollision(this.p1Rocket, this.newship)){
+            this.p1Rocket.reset(); 
+            this.shipExplode(this.newship); 
+        }
         if(this.checkCollision(this.p1Rocket, this.ship03)) {
             //console.log('kaboom ship 03');
             this.p1Rocket.reset();
