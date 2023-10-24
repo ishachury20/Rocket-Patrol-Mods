@@ -49,6 +49,10 @@ class Play extends Phaser.Scene {
             frameRate: 30
         }); 
 
+
+        //this.highScore = 0; //initialize high score 
+        let highScore = localStorage.getItem('highScore') || 0;
+
         this.p1Score = 0; 
         let scoreConfig = {
             fontFamily: 'Courier',
@@ -63,7 +67,10 @@ class Play extends Phaser.Scene {
             fixedWidth: 100
           }
           this.scoreLeft = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2, this.p1Score, scoreConfig);
-          
+          let highScoreText = this.add.text(16, 16, 'High Score: 0', { fontSize: '32px', fill: '#fff' });
+
+          //this.add.text(16, 16, 'High Score: ', { fontSize: '32px', fill: '#fff' });
+
           // GAME OVER flag
           this.gameOver = false; 
 
@@ -73,6 +80,8 @@ class Play extends Phaser.Scene {
               this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart or ← for Menu', scoreConfig).setOrigin(0.5);
               this.gameOver = true; 
           }, null, this);  
+
+        
 
 
     } 
@@ -134,6 +143,13 @@ class Play extends Phaser.Scene {
           boom.destroy();                       // remove explosion sprite
         });        
         this.p1Score += ship.points;
+        
+        if (this.p1Score > this.highScore) {
+            this.highScore = this.p1Score; 
+            highScoreText.setText('High Score: ' + highScore);
+            localStorage.setItem('highScore', highScore);
+        }
+
         this.scoreLeft.text = this.p1Score; 
         this.sound.play('sfx_explosion');
     }
