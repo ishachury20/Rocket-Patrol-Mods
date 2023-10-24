@@ -35,6 +35,12 @@ class Play extends Phaser.Scene {
         this.ship02 = new Spaceship(this, game.config.width + borderUISize*3, borderUISize*5 + borderPadding*2, 'spaceship', 0, 20).setOrigin(0,0);
         this.ship03 = new Spaceship(this, game.config.width, borderUISize*6 + borderPadding*4, 'spaceship', 0, 10).setOrigin(0,0);
     
+        this.halftime = this.time.delayedCall(game.settings.gameTimer/2, () => {
+            this.ship01.moveSpeed *= 1.5;
+            this.ship02.moveSpeed *= 1.5;
+            this.ship03.moveSpeed *= 1.5;
+        }, null, this); 
+
         this.anims.create({
             key: 'explode', 
             frames: this.anims.generateFrameNumbers('explosion', { start: 0, end: 9, first: 0}),

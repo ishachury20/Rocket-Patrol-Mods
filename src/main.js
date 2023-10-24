@@ -13,4 +13,4 @@ let borderPadding = borderUISize / 3;
 
 let keyF, keyR, keyLEFT, keyRIGHT; 
 
-var timer, text; 
+let mouse; 
