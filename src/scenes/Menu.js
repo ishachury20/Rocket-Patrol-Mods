@@ -57,7 +57,7 @@ class Menu extends Phaser.Scene {
             spaceshipSpeed: 4,
             gameTimer: 45000    
           }
-          this.sound.play('sfx_background');
+          //this.sound.play('sfx_background');
           this.scene.start('playScene');    
         }
 
