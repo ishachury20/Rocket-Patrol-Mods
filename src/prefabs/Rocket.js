@@ -35,9 +35,9 @@ class Rocket extends Phaser.GameObjects.Sprite{
         if(this.isFiring && this.y >= borderUISize * 3 + borderPadding){
             //this.y -= this.moveSpeed;
             this.x = Phaser.Math.Clamp(mouse.x, borderUISize + borderPadding, game.config.width-borderPadding-borderUISize); 
-            this.y = Phaser.Math.Clamp(mouse.x, borderUISize + borderPadding, game.config.width-borderPadding-borderUISize); 
-            this.x = Phaser.Math.Wrap(this.y, 0, game.renderer.width); 
-            this.y = Phaser.Math.Wrap(this.x, 0, game.renderer.height); 
+            this.y = Phaser.Math.Clamp(mouse.y, borderUISize + borderPadding, game.config.width-borderPadding-borderUISize); 
+            //this.x = Phaser.Math.Wrap(this.y, 0, game.renderer.width); 
+            //this.y = Phaser.Math.Wrap(this.x, 0, game.renderer.height); 
 
         }
         if(this.y <= borderUISize * 3 + borderPadding){
