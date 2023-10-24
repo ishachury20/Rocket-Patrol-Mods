@@ -37,12 +37,13 @@ class Play extends Phaser.Scene {
 
         mouse = this.input; 
     
+        this.newship = new Spaceship(this, game.config.width, borderUISize*6 + borderPadding*4, 'hardmode', 0, 50).setOrigin(0,0);
         this.ship01 = new Spaceship(this, game.config.width + borderUISize*6, borderUISize*4, 'spaceship', 0, 30).setOrigin(0, 0);
         this.ship02 = new Spaceship(this, game.config.width + borderUISize*3, borderUISize*5 + borderPadding*2, 'spaceship', 0, 20).setOrigin(0,0);
         this.ship03 = new Spaceship(this, game.config.width, borderUISize*6 + borderPadding*4, 'spaceship', 0, 10).setOrigin(0,0);
-        this.newship = new Spaceship(this, game.config.width + borderUISize*2, borderPadding+4, 'hardmode', 0, 50).setOrigin(0,0);
+        
     
-        this.newship.moveSpeed *= 1.25; 
+        this.newship.moveSpeed *= 1.25; //newship has high speed 
 
         this.halftime = this.time.delayedCall(game.settings.gameTimer/2, () => {
             this.ship01.moveSpeed *= 1.5;
@@ -57,9 +58,13 @@ class Play extends Phaser.Scene {
             frameRate: 30
         }); 
 
+        //this.timedEvent = this.time.delayedCall(60000, this.onEvent, [], this); 
+
+
 
         //this.highScore = 0; //initialize high score 
-        let highScore = localStorage.getItem('highScore') || 0;
+        
+        //let highScore = localStorage.getItem('highScore') || 0;
 
         this.p1Score = 0; 
         let scoreConfig = {
@@ -75,7 +80,7 @@ class Play extends Phaser.Scene {
             fixedWidth: 100
           }
           this.scoreLeft = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2, this.p1Score, scoreConfig);
-          let highScoreText = this.add.text(16, 16, 'High Score: 0', { fontSize: '32px', fill: '#fff' });
+          //let highScoreText = this.add.text(16, 16, 'High Score: 0', { fontSize: '32px', fill: '#fff' });
 
           //this.add.text(16, 16, 'High Score: ', { fontSize: '32px', fill: '#fff' });
 
@@ -113,6 +118,8 @@ class Play extends Phaser.Scene {
             this.ship03.update();
             this.newship.update(); 
         } 
+
+        //this.text.setText(`Event.progress: ${this.timedEvent.getProgress().toString().substr(0, 4)}`);
 
         if(this.checkCollision(this.p1Rocket, this.newship)){
             this.p1Rocket.reset(); 
@@ -158,12 +165,13 @@ class Play extends Phaser.Scene {
           boom.destroy();                       // remove explosion sprite
         });        
         this.p1Score += ship.points;
-        
-        if (this.p1Score > this.highScore) {
+        //console.log(p1Score); how to print p1Score value????
+
+        /*if (this.p1Score > this.highScore) {
             this.highScore = this.p1Score; 
             highScoreText.setText('High Score: ' + highScore);
             localStorage.setItem('highScore', highScore);
-        }
+        }*/ 
 
         this.scoreLeft.text = this.p1Score; 
         this.sound.play('sfx_explosion');
