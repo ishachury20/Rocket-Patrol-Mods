@@ -81,7 +81,9 @@ class Play extends Phaser.Scene {
             frameRate: 30
         }); 
 
-        //this.timedEvent = this.time.delayedCall(60000, this.onEvent, [], this); 
+        this.timedEvent = this.time.delayedCall(1000, ()=>{
+            console.log('game over!'); 
+        }, [], this); 
 
 
 
