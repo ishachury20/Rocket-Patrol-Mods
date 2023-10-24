@@ -8,11 +8,14 @@ class Rocket extends Phaser.GameObjects.Sprite{
         
     }
 
-    create(){
-        
-    }
+    
+    create() { //taken from Phaser sandbox example (pointer lock system)
+        mouse.on('pointerdown', function(pointer){
+            if(!this.isFiring){
+                this.input.mouse.requestPointerLock(); 
+            }
+        }, this);
 
-    update() {
         mouse.on('pointermove', function(pointer){ //does not follow pointer :((
             if(!this.isFiring){
                 this.x = pointer.movementX; 
@@ -22,6 +25,9 @@ class Rocket extends Phaser.GameObjects.Sprite{
                 //this.y = Phaser.Math.Wrap(this.y, 0, game.renderer.height); 
             }
         }, this); 
+    }
+
+    update() {
 
         if(mouse.activePointer.leftButtonDown() && !this.isFiring){
             this.isFiring = true; 
