@@ -3,6 +3,29 @@ class Play extends Phaser.Scene {
         super("playScene");
     }
 
+    //list of problem :D 
+ 
+    //high score not functioning 
+    //timer not functioning 
+    //check if mouse control (current implementation) is ok 
+    //check if rocket control (current implementation) is ok
+    //check if background music (current implementation) is ok
+    //new enemy spaceships are moving off the screen (???)
+    //scores being multiplied by some factor (???)
+
+
+    //mods implemented (or attempted to)
+
+    //mouse control (+5)
+    //player controls rocket after its fired (+1)
+    //new background sprite (+1)
+    //parallax effect (+3)
+    //new background music (+1)
+    //speed increase after 30 secs (+1) 
+    //new enemy spaceship (+5) 
+    //high score (+1)
+    //timer/countdown (+3) 
+
     preload() {
         // load images/tile sprites
         this.load.image('rocket', './assets/rocket.png');
@@ -64,7 +87,7 @@ class Play extends Phaser.Scene {
 
         //this.highScore = 0; //initialize high score 
         
-        //let highScore = localStorage.getItem('highScore') || 0;
+        this.highScore = localStorage.getItem('highScore') || 0;
 
         this.p1Score = 0; 
         let scoreConfig = {
@@ -80,7 +103,7 @@ class Play extends Phaser.Scene {
             fixedWidth: 100
           }
           this.scoreLeft = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2, this.p1Score, scoreConfig);
-          //let highScoreText = this.add.text(16, 16, 'High Score: 0', { fontSize: '32px', fill: '#fff' });
+          this.highScoreText = this.add.text(16, 16, 'High Score: 0', { fontSize: '32px', fill: '#fff' });
 
           //this.add.text(16, 16, 'High Score: ', { fontSize: '32px', fill: '#fff' });
 
@@ -166,12 +189,13 @@ class Play extends Phaser.Scene {
         });        
         this.p1Score += ship.points;
         //console.log(p1Score); how to print p1Score value????
-
-        /*if (this.p1Score > this.highScore) {
+        console.log('hi', this.p1Score, this.highScore)
+        if (this.p1Score > this.highScore) {
             this.highScore = this.p1Score; 
-            highScoreText.setText('High Score: ' + highScore);
-            localStorage.setItem('highScore', highScore);
-        }*/ 
+            //console.log()
+            this.highScoreText.setText('High Score: ' + this.highScore);
+            localStorage.setItem('highScore', this.highScore);
+        } 
 
         this.scoreLeft.text = this.p1Score; 
         this.sound.play('sfx_explosion');
