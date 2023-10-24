@@ -8,8 +8,34 @@ class Rocket extends Phaser.GameObjects.Sprite{
         
     }
 
+    create(){
+        
+    }
+
     update() {
-        if(!this.isFiring){
+        mouse.on('pointermove', function(pointer){ //does not follow pointer :((
+            if(!this.isFiring){
+                this.x = pointer.movementX; 
+                //this.y += pointer.movementY; 
+
+                this.x = Phaser.Math.Wrap(this.x, 0, game.renderer.width); 
+                //this.y = Phaser.Math.Wrap(this.y, 0, game.renderer.height); 
+            }
+        }, this); 
+
+        if(mouse.activePointer.leftButtonDown() && !this.isFiring){
+            this.isFiring = true; 
+            this.sfxRocket.play(); 
+        }
+        if(this.isFiring && this.y >= borderUISize * 3 + borderPadding){
+            this.y -= this.moveSpeed;
+        }
+        if(this.y <= borderUISize * 3 + borderPadding){
+            this.isFiring = false; 
+            this.y = game.config.height - borderUISize - borderPadding; 
+        }
+
+        /*if(!this.isFiring){
             if(keyLEFT.isDown && this.x >= borderUISize + this.width){
                 this.x -= this.moveSpeed; 
             } else if (keyRIGHT.isDown && this.x <= game.config.width - borderUISize - this.width){
@@ -26,7 +52,7 @@ class Rocket extends Phaser.GameObjects.Sprite{
         if(this.y <= borderUISize * 3 + borderPadding){
             this.isFiring = false; 
             this.y = game.config.height - borderUISize - borderPadding; 
-        }
+        } */ 
     }
 
     reset(){
