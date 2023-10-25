@@ -148,7 +148,7 @@ class Play extends Phaser.Scene {
         } 
 
         let progress = this.timedEvent.getProgress(); 
-        let progressinSeconds = 100 - Math.round(progress * 100); 
+        let progressinSeconds = 60 - Math.round(progress * 100); 
         console.log(Math.round(progress * 100)); 
         this.timerText.setText(progressinSeconds); 
         //this.text.setText(`Event.progress: ${this.timedEvent.getProgress().toString().substr(0, 4)}`);
