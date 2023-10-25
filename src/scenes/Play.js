@@ -19,7 +19,8 @@ class Play extends Phaser.Scene {
     //speed increase after 30 secs (+1) 
     //new enemy spaceship (+5) 
     //high score (+1)
-    //timer/countdown (+3) 
+    //timer/countdown (+3) [progress]
+    //randomized sound effect (+3)
 
     preload() {
         // load images/tile sprites
@@ -77,15 +78,15 @@ class Play extends Phaser.Scene {
         }); 
 
         this.timerText = this.add.text(100, 100, 'Timer: 60', { fontSize: '32px', fill: '#fff' });
+        
         this.timer = 60;
 
-        this.timedEvent = this.time.delayedCall(60000, ()=>{
-            console.log(this.timer); 
-            if(this.gameOver == false){
-                this.timer--; 
-                this.timerText.setText('Timer: ' + this.timer); //what var goes in here? 
-            } 
-        }, [], this); 
+        this.timedEvent = this.time.addEvent({
+            delay: 1000, 
+            loop: true,
+            callback: this.countdown,
+            callbackScope: this,
+        }) 
         
 
 
@@ -147,10 +148,10 @@ class Play extends Phaser.Scene {
             this.newship.update(); 
         } 
 
-        let progress = this.timedEvent.getProgress(); 
-        let progressinSeconds = 60 - Math.round(progress * 100); 
-        console.log(Math.round(progress * 100)); 
-        this.timerText.setText(progressinSeconds); 
+        //let progress = this.timedEvent.getProgress()* 0.6; 
+        //let progressinSeconds = (100 * - Math.round(progress * 100)); 
+        //console.log(Math.round(progress * 100)); 
+        
         //this.text.setText(`Event.progress: ${this.timedEvent.getProgress().toString().substr(0, 4)}`);
         
 
@@ -211,4 +212,12 @@ class Play extends Phaser.Scene {
         this.sound.play('sfx_explosion');
     }
 
-}
+    countdown(){
+        this.timer--; 
+        console.log('timer', this.timer); 
+        this.timerText.setText(this.timer); 
+        //if(gameOver == true){
+
+        //}
+    }
+} 
