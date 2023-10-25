@@ -81,7 +81,7 @@ class Play extends Phaser.Scene {
             frameRate: 30
         }); 
 
-        this.timerText = this.add.text(16, 32, 'Timer: 60', { fontSize: '32px', fill: '#fff' });
+        this.timerText = this.add.text(100, 100, 'Timer: 60', { fontSize: '32px', fill: '#fff' });
         this.timer = 60;
 
         this.timedEvent = this.time.delayedCall(60000, ()=>{
@@ -113,7 +113,7 @@ class Play extends Phaser.Scene {
             fixedWidth: 100
           }
           this.scoreLeft = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2, this.p1Score, scoreConfig);
-          this.highScoreText = this.add.text(16, 16, 'High Score: 0', { fontSize: '32px', fill: '#fff' });
+          this.highScoreText = this.add.text(160, 160, 'High Score: ' + this.highScore, { fontSize: '32px', fill: '#fff' });
 
           //this.add.text(16, 16, 'High Score: ', { fontSize: '32px', fill: '#fff' });
 
@@ -207,7 +207,7 @@ class Play extends Phaser.Scene {
         console.log('hi', this.p1Score, this.highScore)
         if (this.p1Score > this.highScore) {
             this.highScore = this.p1Score; 
-            //console.log()
+            console.log('??????'); 
             this.highScoreText.setText('High Score: ' + this.highScore);
             localStorage.setItem('highScore', this.highScore);
         } 
