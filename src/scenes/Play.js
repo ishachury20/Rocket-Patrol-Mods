@@ -5,12 +5,7 @@ class Play extends Phaser.Scene {
 
     //list of problem :D 
  
-    //high score not functioning 
-    //timer not functioning 
-    //check if mouse control (current implementation) is ok 
-    //check if rocket control (current implementation) is ok
-    //check if background music (current implementation) is ok
-    //new enemy spaceships are moving off the screen (???)
+    //timer function, 100 secs? 
     //scores being multiplied by some factor (???)
 
 
@@ -153,7 +148,7 @@ class Play extends Phaser.Scene {
         } 
 
         let progress = this.timedEvent.getProgress(); 
-        let progressinSeconds = Math.round(progress * 100); 
+        let progressinSeconds = 100 - Math.round(progress * 100); 
         console.log(Math.round(progress * 100)); 
         this.timerText.setText(progressinSeconds); 
         //this.text.setText(`Event.progress: ${this.timedEvent.getProgress().toString().substr(0, 4)}`);
