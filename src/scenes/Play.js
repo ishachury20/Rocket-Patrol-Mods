@@ -77,7 +77,7 @@ class Play extends Phaser.Scene {
             frameRate: 30
         }); 
 
-        this.timerText = this.add.text(100, 100, 'Timer: 60', { fontSize: '32px', fill: '#fff' });
+        this.timerText = this.add.text(550, 60, '60', { fontSize: '32px', fill: '#fff' });
         
         this.timer = 60;
 
@@ -109,7 +109,7 @@ class Play extends Phaser.Scene {
             fixedWidth: 100
           }
           this.scoreLeft = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2, this.p1Score, scoreConfig);
-          this.highScoreText = this.add.text(160, 160, 'High Score: ' + this.highScore, { fontSize: '32px', fill: '#fff' });
+          this.highScoreText = this.add.text(200, 60, 'High Score:' + this.highScore, { fontSize: '32px', fill: '#fff' });
 
           //this.add.text(16, 16, 'High Score: ', { fontSize: '32px', fill: '#fff' });
 
@@ -213,11 +213,13 @@ class Play extends Phaser.Scene {
     }
 
     countdown(){
-        this.timer--; 
-        console.log('timer', this.timer); 
-        this.timerText.setText(this.timer); 
+        if(this.gameOver == false){
+            this.timer--; 
+            console.log('timer', this.timer); 
+            this.timerText.setText(this.timer); 
+        }
+    }
         //if(gameOver == true){
 
         //}
-    }
 } 
