@@ -3,13 +3,7 @@ class Play extends Phaser.Scene {
         super("playScene");
     }
 
-    //list of problem :D 
- 
-    //timer function, 100 secs? 
-    //scores being multiplied by some factor (???)
-
-
-    //mods implemented (or attempted to)
+    //mods implemented 
 
     //mouse control (+5)
     //player controls rocket after its fired (+1)
@@ -19,8 +13,7 @@ class Play extends Phaser.Scene {
     //speed increase after 30 secs (+1) 
     //new enemy spaceship (+5) 
     //high score (+1)
-    //timer/countdown (+3) [progress]
-    //randomized sound effect (+3)
+    //timer/countdown (+3) 
 
     preload() {
         // load images/tile sprites
@@ -29,7 +22,7 @@ class Play extends Phaser.Scene {
         this.load.image('starfield', './assets/starfield.png');
         this.load.image('background', './assets/pixil-frame-0.png'); 
         this.load.image('stars', './assets/pixil-frame-1.png'); 
-        this.load.image('hardmode', 'assets/pixil-frame-2.png'); ///not working? 
+        this.load.image('hardmode', 'assets/pixil-frame-3.png'); ///not working? 
         // load spritesheet
         this.load.spritesheet('explosion', './assets/explosion.png', {frameWidth: 64, frameHeight: 32, startFrame: 0, endFrame: 9});
     }
@@ -61,7 +54,8 @@ class Play extends Phaser.Scene {
         this.ship02 = new Spaceship(this, game.config.width + borderUISize*3, borderUISize*5 + borderPadding*2, 'spaceship', 0, 20).setOrigin(0,0);
         this.ship03 = new Spaceship(this, game.config.width, borderUISize*6 + borderPadding*4, 'spaceship', 0, 10).setOrigin(0,0);
         
-    
+        console.log(this.ship01.moveSpeed); 
+
         this.newship.moveSpeed *= 1.25; //newship has high speed 
 
         this.halftime = this.time.delayedCall(game.settings.gameTimer/2, () => {
@@ -77,9 +71,17 @@ class Play extends Phaser.Scene {
             frameRate: 30
         }); 
 
-        this.timerText = this.add.text(550, 60, '60', { fontSize: '32px', fill: '#fff' });
         
-        this.timer = 60;
+        
+        if(this.ship01.moveSpeed == 3){
+            this.timer = 60;
+            this.timerText = this.add.text(550, 60, '60', { fontSize: '32px', fill: '#fff' });
+        } else{
+            this.timer = 45; 
+            this.timerText = this.add.text(550, 60, '45', { fontSize: '32px', fill: '#fff' });
+        }
+
+        
 
         this.timedEvent = this.time.addEvent({
             delay: 1000, 
@@ -188,6 +190,8 @@ class Play extends Phaser.Scene {
         }
       }
     
+      
+
     shipExplode(ship){
         ship.alpha = 0;
         // create explosion sprite at ship's position
@@ -200,10 +204,10 @@ class Play extends Phaser.Scene {
         });        
         this.p1Score += ship.points;
         //console.log(p1Score); how to print p1Score value????
-        console.log('hi', this.p1Score, this.highScore)
+        //console.log('hi', this.p1Score, this.highScore)
         if (this.p1Score > this.highScore) {
             this.highScore = this.p1Score; 
-            console.log('??????'); 
+            //console.log('??????'); 
             this.highScoreText.setText('High Score: ' + this.highScore);
             localStorage.setItem('highScore', this.highScore);
         } 
@@ -215,7 +219,7 @@ class Play extends Phaser.Scene {
     countdown(){
         if(this.gameOver == false){
             this.timer--; 
-            console.log('timer', this.timer); 
+            //console.log('timer', this.timer); 
             this.timerText.setText(this.timer); 
         }
     }
