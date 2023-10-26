@@ -1,8 +1,3 @@
-class Play extends Phaser.Scene {
-    constructor() {
-        super("playScene");
-    }
-
     //mods implemented 
 
     //mouse control (+5)
@@ -15,6 +10,11 @@ class Play extends Phaser.Scene {
     //high score (+1)
     //timer/countdown (+3) 
 
+class Play extends Phaser.Scene {
+    constructor() {
+        super("playScene");
+    }
+
     preload() {
         // load images/tile sprites
         this.load.image('rocket', './assets/rocket.png');
@@ -22,7 +22,7 @@ class Play extends Phaser.Scene {
         this.load.image('starfield', './assets/starfield.png');
         this.load.image('background', './assets/pixil-frame-0.png'); 
         this.load.image('stars', './assets/pixil-frame-1.png'); 
-        this.load.image('hardmode', 'assets/pixil-frame-3.png'); ///not working? 
+        this.load.image('hardmode', 'assets/pixil-frame-3.png'); 
         // load spritesheet
         this.load.spritesheet('explosion', './assets/explosion.png', {frameWidth: 64, frameHeight: 32, startFrame: 0, endFrame: 9});
     }
@@ -47,6 +47,7 @@ class Play extends Phaser.Scene {
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT); 
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT); 
 
+        //mouse and input implementation taken from https://phaser.io/examples/v3/view/games/breakout/breakout
         mouse = this.input; 
     
         this.newship = new Spaceship(this, game.config.width, borderUISize*6 + borderPadding*4, 'hardmode', 0, 50).setOrigin(0,0);
@@ -54,10 +55,11 @@ class Play extends Phaser.Scene {
         this.ship02 = new Spaceship(this, game.config.width + borderUISize*3, borderUISize*5 + borderPadding*2, 'spaceship', 0, 20).setOrigin(0,0);
         this.ship03 = new Spaceship(this, game.config.width, borderUISize*6 + borderPadding*4, 'spaceship', 0, 10).setOrigin(0,0);
         
-        console.log(this.ship01.moveSpeed); 
+        //console.log(this.ship01.moveSpeed); 
 
         this.newship.moveSpeed *= 1.25; //newship has high speed 
 
+        //Delayed call function created with help from Rocket Patrol tutorial and https://newdocs.phaser.io/docs/3.55.2/focus/Phaser.Time.Clock-delayedCall
         this.halftime = this.time.delayedCall(game.settings.gameTimer/2, () => {
             this.ship01.moveSpeed *= 1.5;
             this.ship02.moveSpeed *= 1.5;
@@ -72,7 +74,8 @@ class Play extends Phaser.Scene {
         }); 
 
         
-        
+        //statements to check which mode the player selected and add the time accordingly 
+        //this.add.text taken from this: https://stackoverflow.com/questions/37408825/create-a-high-score-in-phaser
         if(this.ship01.moveSpeed == 3){
             this.timer = 60;
             this.timerText = this.add.text(550, 60, '60', { fontSize: '32px', fill: '#fff' });
@@ -82,7 +85,7 @@ class Play extends Phaser.Scene {
         }
 
         
-
+        //Nathan helped me understand how to create and implement the timer function 
         this.timedEvent = this.time.addEvent({
             delay: 1000, 
             loop: true,
@@ -94,7 +97,7 @@ class Play extends Phaser.Scene {
 
 
         //this.highScore = 0; //initialize high score 
-        
+        //Nate helped me add this line 
         this.highScore = localStorage.getItem('highScore') || 0;
 
         this.p1Score = 0; 
@@ -139,6 +142,8 @@ class Play extends Phaser.Scene {
             this.scene.start("menuScene");
         }
 
+        //Parallax effect created with the help of: https://youtu.be/-lJ2SQnbPSU?si=5QYsB6UQ2Kql6Q9z
+        //this video helped me understand how parallax effects were created, and how to implement them
         this.background.tilePositionX -= 1; 
         this.stars.tilePositionX -= 3; 
 
@@ -203,12 +208,15 @@ class Play extends Phaser.Scene {
           boom.destroy();                       // remove explosion sprite
         });        
         this.p1Score += ship.points;
-        //console.log(p1Score); how to print p1Score value????
-        //console.log('hi', this.p1Score, this.highScore)
+        //score values were also changed (not in-class mod criteria though)
+
+        //https://stackoverflow.com/questions/37408825/create-a-high-score-in-phaser
+        //This site also helped me understand how to implement the high score, and was the basis for my code 
+        //Nate helped me with errors/bugs I had within high score during office hours 
         if (this.p1Score > this.highScore) {
             this.highScore = this.p1Score; 
             //console.log('??????'); 
-            this.highScoreText.setText('High Score: ' + this.highScore);
+            this.highScoreText.setText('High Score:' + this.highScore);
             localStorage.setItem('highScore', this.highScore);
         } 
 
@@ -216,14 +224,12 @@ class Play extends Phaser.Scene {
         this.sound.play('sfx_explosion');
     }
 
+    //Nathan helped me understand how to do this callback function :D 
     countdown(){
         if(this.gameOver == false){
             this.timer--; 
-            //console.log('timer', this.timer); 
             this.timerText.setText(this.timer); 
         }
     }
-        //if(gameOver == true){
-
-        //}
+        
 } 

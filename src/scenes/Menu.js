@@ -28,7 +28,7 @@ class Menu extends Phaser.Scene {
         }
 
         
-
+        //changed text on Menu screen (to suit the mods)
         this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding, 'ROCKET PATROL', menuConfig).setOrigin(0.5);
         this.add.text(game.config.width/2, game.config.height/2, 'Drag mouse to move & hold to fire', menuConfig).setOrigin(0.5);
         menuConfig.backgroundColor = '#00FF00';
@@ -48,7 +48,7 @@ class Menu extends Phaser.Scene {
             spaceshipSpeed: 3,
             gameTimer: 60000    
           }
-          this.sound.play('sfx_background');
+          this.sound.play('sfx_background'); //added background music (code taken from Rocket Patrol tutorial)
           this.scene.start('playScene');    
         }
         if (Phaser.Input.Keyboard.JustDown(keyRIGHT)) {
@@ -57,7 +57,7 @@ class Menu extends Phaser.Scene {
             spaceshipSpeed: 4,
             gameTimer: 45000    
           }
-          this.sound.play('sfx_background');
+          this.sound.play('sfx_background'); //added background music (code taken from Rocket Patrol tutorial)
           this.scene.start('playScene');    
         }
 
